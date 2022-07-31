@@ -1,0 +1,18 @@
+conda install -y pytorch torchvision cudatoolkit=10.0 -c pytorch
+conda install -y matplotlib
+conda install -y pandas
+conda install -y tqdm
+pip install opencv-python
+pip install tb-nightly
+pip install visdom
+pip install scikit-image
+pip install tikzplotlib
+pip install gdown
+conda install -y cython
+pip install pycocotools
+pip install lvis
+pip install spatial-correlation-sampler
+pip install jpeg4py 
+sudo apt-get install ninja-build
+mkdir pytracking/networks
+gdown https://drive.google.com/uc\?id\=1qgachgqks2UGjKx-GdO1qylBDdB1f9KN -O pytracking/networks/dimp50.pth
