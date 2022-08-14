@@ -113,7 +113,9 @@ class MSCOCOSeq(BaseVideoDataset):
 
         bbox = torch.Tensor(anno['bbox']).view(1, 4)
 
-        mask = torch.Tensor(self.coco_set.annToMask(anno)).unsqueeze(dim=0)
+#         mask = torch.Tensor(self.coco_set.annToMask(anno)).unsqueeze(dim=0)
+        mask = torch.Tensor(self.create_mask(anno)).unsqueeze(dim=0)
+
 
         valid = (bbox[:, 2] > 0) & (bbox[:, 3] > 0)
         visible = valid.clone().byte()
@@ -168,3 +170,21 @@ class MSCOCOSeq(BaseVideoDataset):
         object_meta = self.get_meta_info(seq_id)
 
         return frame_list, anno_frames, object_meta
+    
+    def create_mask(self, ann):
+
+        h = 1080
+        w = 1920
+        mask = np.zeros((h, w), dtype=np.uint8)
+        print(mask)
+
+        # # print(segm)
+        bb = ann['bbox']
+        x1, x2, y1, y2 = [bb[0], bb[0]+bb[2], bb[1], bb[1]+bb[3]]
+        x1, x2, y1, y2 = int(x1), int(x2), int(y1), int(y2)
+
+
+        # print([x1, x2, y1, y2])
+        mask[y1:y2, x1:x2] = 1
+        
+        return mask
